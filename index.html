@@ -17,462 +17,84 @@
     --muted: #555570;
     --card: #13131f;
   }
-
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Syne', sans-serif;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  /* Background grid */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .container {
-    max-width: 860px;
-    margin: 0 auto;
-    padding: 40px 20px;
-    position: relative;
-    z-index: 1;
-  }
-
-  /* Header */
-  header {
-    text-align: center;
-    margin-bottom: 48px;
-    animation: fadeDown 0.6s ease;
-  }
-
-  .logo {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
-  }
-
-  .shield-icon {
-    width: 48px;
-    height: 48px;
-    background: linear-gradient(135deg, var(--accent), var(--accent3));
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    box-shadow: 0 0 30px rgba(0,255,136,0.3);
-  }
-
-  h1 {
-    font-size: clamp(28px, 5vw, 42px);
-    font-weight: 800;
-    letter-spacing: -1px;
-    background: linear-gradient(135deg, var(--accent) 0%, var(--accent3) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .tagline {
-    color: var(--muted);
-    font-family: 'Space Mono', monospace;
-    font-size: 13px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-top: 8px;
-  }
-
-  /* API Key Section */
-  .api-section {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-    margin-bottom: 24px;
-    animation: fadeUp 0.6s ease 0.1s both;
-  }
-
-  .section-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 12px;
-  }
-
-  .input-row {
-    display: flex;
-    gap: 12px;
-  }
-
-  input[type="text"], input[type="password"] {
-    flex: 1;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 12px 16px;
-    color: var(--text);
-    font-family: 'Space Mono', monospace;
-    font-size: 13px;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-
-  input:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(0,255,136,0.08);
-  }
-
-  /* Upload Area */
-  .upload-section {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-    margin-bottom: 24px;
-    animation: fadeUp 0.6s ease 0.2s both;
-  }
-
-  .drop-zone {
-    border: 2px dashed var(--border);
-    border-radius: 12px;
-    padding: 48px 24px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-  }
-
-  .drop-zone:hover, .drop-zone.drag-over {
-    border-color: var(--accent);
-    background: rgba(0,255,136,0.04);
-  }
-
-  .drop-zone input[type="file"] {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    cursor: pointer;
-    width: 100%;
-    height: 100%;
-  }
-
-  .drop-icon {
-    font-size: 40px;
-    margin-bottom: 12px;
-  }
-
-  .drop-text {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 6px;
-  }
-
-  .drop-sub {
-    font-size: 13px;
-    color: var(--muted);
-    font-family: 'Space Mono', monospace;
-  }
-
-  .file-selected {
-    display: none;
-    align-items: center;
-    gap: 12px;
-    background: rgba(0,255,136,0.08);
-    border: 1px solid rgba(0,255,136,0.2);
-    border-radius: 10px;
-    padding: 12px 16px;
-    margin-top: 16px;
-  }
-
+  body { background: var(--bg); color: var(--text); font-family: 'Syne', sans-serif; min-height: 100vh; overflow-x: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px); background-size: 40px 40px; pointer-events: none; z-index: 0; }
+  .container { max-width: 860px; margin: 0 auto; padding: 40px 20px; position: relative; z-index: 1; }
+  header { text-align: center; margin-bottom: 48px; animation: fadeDown 0.6s ease; }
+  .logo { display: inline-flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .shield-icon { width: 48px; height: 48px; background: linear-gradient(135deg, var(--accent), var(--accent3)); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; box-shadow: 0 0 30px rgba(0,255,136,0.3); }
+  h1 { font-size: clamp(28px, 5vw, 42px); font-weight: 800; letter-spacing: -1px; background: linear-gradient(135deg, var(--accent) 0%, var(--accent3) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .tagline { color: var(--muted); font-family: 'Space Mono', monospace; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; margin-top: 8px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin-bottom: 20px; }
+  .section-label { font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+  .input-group { margin-bottom: 14px; }
+  .input-group label { font-size: 12px; color: var(--muted); font-family: 'Space Mono', monospace; margin-bottom: 6px; display: block; }
+  input[type="text"], input[type="password"] { width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; color: var(--text); font-family: 'Space Mono', monospace; font-size: 13px; outline: none; transition: border-color 0.2s; }
+  input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,255,136,0.08); }
+  .drop-zone { border: 2px dashed var(--border); border-radius: 12px; padding: 40px 24px; text-align: center; cursor: pointer; transition: all 0.3s ease; position: relative; }
+  .drop-zone:hover, .drop-zone.drag-over { border-color: var(--accent); background: rgba(0,255,136,0.04); }
+  .drop-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+  .drop-icon { font-size: 36px; margin-bottom: 10px; }
+  .drop-text { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .drop-sub { font-size: 12px; color: var(--muted); font-family: 'Space Mono', monospace; }
+  .file-selected { display: none; align-items: center; gap: 12px; background: rgba(0,255,136,0.08); border: 1px solid rgba(0,255,136,0.2); border-radius: 10px; padding: 12px 16px; margin-top: 14px; }
   .file-selected.show { display: flex; }
-
-  .file-name {
-    font-family: 'Space Mono', monospace;
-    font-size: 13px;
-    color: var(--accent);
-    flex: 1;
-  }
-
-  /* Features checkboxes */
-  .features-section {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-    margin-bottom: 24px;
-    animation: fadeUp 0.6s ease 0.3s both;
-  }
-
-  .features-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-top: 4px;
-  }
-
-  .feature-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 12px 14px;
-    cursor: pointer;
-    transition: all 0.2s;
-    user-select: none;
-  }
-
+  .file-name { font-family: 'Space Mono', monospace; font-size: 12px; color: var(--accent); flex: 1; word-break: break-all; }
+  .features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .feature-item { display: flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; cursor: pointer; transition: all 0.2s; user-select: none; }
   .feature-item:hover { border-color: var(--accent); }
-
   .feature-item input[type="checkbox"] { display: none; }
-
-  .check-box {
-    width: 18px;
-    height: 18px;
-    border: 2px solid var(--muted);
-    border-radius: 5px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-    font-size: 11px;
-  }
-
-  .feature-item input:checked ~ .check-box {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #000;
-  }
-
-  .feature-item.active {
-    border-color: rgba(0,255,136,0.4);
-    background: rgba(0,255,136,0.05);
-  }
-
+  .check-box { width: 18px; height: 18px; border: 2px solid var(--muted); border-radius: 5px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-size: 11px; }
+  .feature-item.active { border-color: rgba(0,255,136,0.4); background: rgba(0,255,136,0.05); }
+  .feature-item.active .check-box { background: var(--accent); border-color: var(--accent); color: #000; }
   .feature-text { font-size: 13px; font-weight: 600; }
   .feature-desc { font-size: 11px; color: var(--muted); margin-top: 2px; font-family: 'Space Mono', monospace; }
-
-  /* Button */
-  .btn-protect {
-    width: 100%;
-    padding: 18px;
-    background: linear-gradient(135deg, var(--accent), var(--accent3));
-    border: none;
-    border-radius: 12px;
-    color: #000;
-    font-family: 'Syne', sans-serif;
-    font-size: 16px;
-    font-weight: 800;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    margin-bottom: 24px;
-    animation: fadeUp 0.6s ease 0.4s both;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .btn-protect::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, transparent, rgba(255,255,255,0.1), transparent);
-    transform: translateX(-100%);
-    transition: transform 0.5s;
-  }
-
-  .btn-protect:hover::after { transform: translateX(100%); }
-  .btn-protect:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,255,136,0.4); }
-  .btn-protect:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-
-  /* Progress / Log */
-  .log-section {
-    display: none;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-    margin-bottom: 24px;
-    animation: fadeUp 0.4s ease;
-  }
-
+  .btn { width: 100%; padding: 16px; border: none; border-radius: 12px; font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 800; letter-spacing: 1px; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; }
+  .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent3)); color: #000; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,255,136,0.4); }
+  .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
+  .btn-outline { background: transparent; border: 2px solid var(--accent); color: var(--accent); margin-top: 12px; }
+  .btn-outline:hover { background: var(--accent); color: #000; }
+  .log-section { display: none; }
   .log-section.show { display: block; }
-
-  .log-box {
-    background: #050508;
-    border-radius: 10px;
-    padding: 16px;
-    font-family: 'Space Mono', monospace;
-    font-size: 12px;
-    line-height: 1.8;
-    max-height: 300px;
-    overflow-y: auto;
-    border: 1px solid var(--border);
-  }
-
-  .log-line { margin-bottom: 4px; }
+  .log-box { background: #050508; border-radius: 10px; padding: 16px; font-family: 'Space Mono', monospace; font-size: 12px; line-height: 1.8; max-height: 280px; overflow-y: auto; border: 1px solid var(--border); }
+  .log-line { margin-bottom: 2px; }
   .log-line.info { color: var(--accent3); }
   .log-line.success { color: var(--accent); }
   .log-line.error { color: var(--accent2); }
   .log-line.agent { color: #ffaa00; }
-
-  .progress-bar-wrap {
-    background: var(--surface);
-    border-radius: 999px;
-    height: 6px;
-    margin: 16px 0;
-    overflow: hidden;
-  }
-
-  .progress-bar {
-    height: 100%;
-    background: linear-gradient(90deg, var(--accent), var(--accent3));
-    border-radius: 999px;
-    width: 0%;
-    transition: width 0.5s ease;
-    box-shadow: 0 0 10px var(--accent);
-  }
-
-  /* Result */
-  .result-section {
-    display: none;
-    background: var(--card);
-    border: 1px solid rgba(0,255,136,0.3);
-    border-radius: 16px;
-    padding: 24px;
-    margin-bottom: 24px;
-    animation: fadeUp 0.4s ease;
-  }
-
+  .log-line.warn { color: #ffcc00; }
+  .progress-wrap { background: var(--surface); border-radius: 999px; height: 6px; margin: 14px 0; overflow: hidden; }
+  .progress-bar { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent3)); border-radius: 999px; width: 0%; transition: width 0.5s ease; box-shadow: 0 0 10px var(--accent); }
+  .result-section { display: none; }
   .result-section.show { display: block; }
-
-  .result-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 20px;
-  }
-
-  .result-badge {
-    background: var(--accent);
-    color: #000;
-    padding: 4px 12px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 700;
-    font-family: 'Space Mono', monospace;
-  }
-
-  .protection-layers {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-
-  .layer-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 14px;
-  }
-
-  .layer-status {
-    font-size: 11px;
-    font-family: 'Space Mono', monospace;
-    color: var(--accent);
-    margin-bottom: 4px;
-  }
-
+  .layers-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+  .layer-card { background: var(--surface); border: 1px solid rgba(0,255,136,0.2); border-radius: 10px; padding: 14px; }
+  .layer-status { font-size: 11px; font-family: 'Space Mono', monospace; color: var(--accent); margin-bottom: 4px; }
   .layer-name { font-size: 13px; font-weight: 600; }
-
-  .btn-download {
-    width: 100%;
-    padding: 16px;
-    background: transparent;
-    border: 2px solid var(--accent);
-    border-radius: 12px;
-    color: var(--accent);
-    font-family: 'Syne', sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  .btn-download:hover {
-    background: var(--accent);
-    color: #000;
-  }
-
-  /* AI Response */
-  .ai-response {
-    background: rgba(255,170,0,0.05);
-    border: 1px solid rgba(255,170,0,0.2);
-    border-radius: 10px;
-    padding: 16px;
-    margin-top: 16px;
-    font-size: 13px;
-    line-height: 1.7;
-    color: #ffcc66;
-    font-family: 'Space Mono', monospace;
-    white-space: pre-wrap;
-    display: none;
-  }
-
-  .ai-response.show { display: block; }
-
-  @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
-  }
-
-  .blinking { animation: pulse 1s infinite; }
-
-  /* Scrollbar */
+  .layer-method { font-size: 11px; color: var(--muted); margin-top: 4px; font-family: 'Space Mono', monospace; }
+  .result-badge { background: var(--accent); color: #000; padding: 4px 12px; border-radius: 999px; font-size: 12px; font-weight: 700; font-family: 'Space Mono', monospace; }
+  .result-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+  .status-chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-family: 'Space Mono', monospace; margin-bottom: 10px; }
+  .status-chip.waiting { background: rgba(255,170,0,0.1); color: #ffaa00; border: 1px solid rgba(255,170,0,0.3); }
+  .status-chip.running { background: rgba(0,170,255,0.1); color: var(--accent3); border: 1px solid rgba(0,170,255,0.3); }
+  .status-chip.done { background: rgba(0,255,136,0.1); color: var(--accent); border: 1px solid rgba(0,255,136,0.3); }
+  .status-chip.failed { background: rgba(255,51,102,0.1); color: var(--accent2); border: 1px solid rgba(255,51,102,0.3); }
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .blinking { animation: pulse 1.2s infinite; }
   ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
-
-  @media (max-width: 600px) {
-    .features-grid { grid-template-columns: 1fr; }
-    .protection-layers { grid-template-columns: 1fr; }
-    .input-row { flex-direction: column; }
-  }
+  @media (max-width: 600px) { .features-grid, .layers-grid { grid-template-columns: 1fr; } }
+  .hint { font-size: 11px; color: var(--muted); font-family: 'Space Mono', monospace; margin-top: 8px; }
+  .hint a { color: var(--accent3); }
 </style>
 </head>
 <body>
 <div class="container">
 
-  <!-- Header -->
   <header>
     <div class="logo">
       <div class="shield-icon">🛡️</div>
@@ -481,127 +103,114 @@
     <p class="tagline">AI-Powered Android App Protection</p>
   </header>
 
-  <!-- API Key -->
-  <div class="api-section">
-    <div class="section-label">⚡ Groq API Key</div>
-    <div class="input-row">
-      <input type="password" id="apiKey" placeholder="Paste Groq API key kamu di sini..." />
+  <!-- Config -->
+  <div class="card" style="animation: fadeUp 0.5s ease 0.1s both">
+    <div class="section-label">⚙️ Konfigurasi</div>
+    <div class="input-group">
+      <label>GROQ API KEY (untuk AI Agent)</label>
+      <input type="password" id="groqKey" placeholder="gsk_xxxxxxxxxxxxxxxxxxxx" />
+      <p class="hint">Gratis di → <a href="https://console.groq.com" target="_blank">console.groq.com</a></p>
     </div>
-    <p style="font-size:11px;color:var(--muted);margin-top:10px;font-family:'Space Mono',monospace;">
-      Dapatkan gratis di → <a href="https://console.groq.com" target="_blank" style="color:var(--accent3);">console.groq.com</a>
-    </p>
+    <div class="input-group">
+      <label>GITHUB TOKEN (untuk trigger Actions)</label>
+      <input type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" />
+      <p class="hint">Settings → Developer settings → Personal access tokens (centang: repo + workflow)</p>
+    </div>
+    <div class="input-group">
+      <label>GITHUB USERNAME / REPO</label>
+      <input type="text" id="ghRepo" placeholder="Rastha09/Apk-protector" />
+    </div>
   </div>
 
   <!-- Upload -->
-  <div class="upload-section">
+  <div class="card" style="animation: fadeUp 0.5s ease 0.2s both">
     <div class="section-label">📱 Upload APK</div>
     <div class="drop-zone" id="dropZone">
       <input type="file" id="apkFile" accept=".apk" />
       <div class="drop-icon">📦</div>
       <div class="drop-text">Drop file APK di sini</div>
-      <div class="drop-sub">atau klik untuk pilih file • Max 100MB</div>
+      <div class="drop-sub">atau klik untuk pilih file</div>
     </div>
     <div class="file-selected" id="fileSelected">
       <span>📱</span>
       <span class="file-name" id="fileName">—</span>
-      <span id="fileSize" style="font-size:11px;color:var(--muted);font-family:'Space Mono',monospace;"></span>
+      <span id="fileSize" style="font-size:11px;color:var(--muted);font-family:'Space Mono',monospace;flex-shrink:0;"></span>
     </div>
   </div>
 
   <!-- Features -->
-  <div class="features-section">
-    <div class="section-label">🔒 Pilih Proteksi</div>
+  <div class="card" style="animation: fadeUp 0.5s ease 0.3s both">
+    <div class="section-label">🔒 Fitur Proteksi</div>
     <div class="features-grid">
       <label class="feature-item active" onclick="toggleFeature(this)">
         <input type="checkbox" checked value="obfuscation">
         <div class="check-box">✓</div>
-        <div>
-          <div class="feature-text">Obfuscation</div>
-          <div class="feature-desc">Rename class/method</div>
-        </div>
+        <div><div class="feature-text">Obfuscation</div><div class="feature-desc">Rename class/method</div></div>
       </label>
       <label class="feature-item active" onclick="toggleFeature(this)">
         <input type="checkbox" checked value="dex_encrypt">
         <div class="check-box">✓</div>
-        <div>
-          <div class="feature-text">DEX Encrypt</div>
-          <div class="feature-desc">Enkripsi string & bytecode</div>
-        </div>
+        <div><div class="feature-text">DEX Encrypt</div><div class="feature-desc">Enkripsi string</div></div>
       </label>
       <label class="feature-item active" onclick="toggleFeature(this)">
         <input type="checkbox" checked value="anti_debug">
         <div class="check-box">✓</div>
-        <div>
-          <div class="feature-text">Anti-Debug</div>
-          <div class="feature-desc">Anti-tamper & emulator</div>
-        </div>
+        <div><div class="feature-text">Anti-Debug</div><div class="feature-desc">Anti-tamper</div></div>
       </label>
       <label class="feature-item active" onclick="toggleFeature(this)">
         <input type="checkbox" checked value="strip_meta">
         <div class="check-box">✓</div>
-        <div>
-          <div class="feature-text">Strip Metadata</div>
-          <div class="feature-desc">Hapus signature & info</div>
-        </div>
+        <div><div class="feature-text">Strip Meta</div><div class="feature-desc">Hapus signature</div></div>
       </label>
     </div>
   </div>
 
   <!-- Button -->
-  <button class="btn-protect" id="btnProtect" onclick="startProtection()">
+  <button class="btn btn-primary" id="btnProtect" onclick="startProtection()" style="margin-bottom:20px;animation: fadeUp 0.5s ease 0.4s both">
     🛡️ Proteksi APK Sekarang
   </button>
 
   <!-- Log -->
-  <div class="log-section" id="logSection">
-    <div class="section-label blinking" id="logLabel">⚡ Proses Berjalan...</div>
-    <div class="progress-bar-wrap">
-      <div class="progress-bar" id="progressBar"></div>
-    </div>
+  <div class="card log-section" id="logSection">
+    <div class="section-label blinking" id="logLabel">⚡ Memproses...</div>
+    <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
     <div class="log-box" id="logBox"></div>
-    <div class="ai-response" id="aiResponse"></div>
   </div>
 
-  <!-- Result -->
-  <div class="result-section" id="resultSection">
-    <div class="result-header">
-      <span style="font-size:24px;">✅</span>
-      <div>
-        <div style="font-size:16px;font-weight:700;">Proteksi Selesai!</div>
-        <div style="font-size:12px;color:var(--muted);font-family:'Space Mono',monospace;" id="resultTime"></div>
-      </div>
-      <div class="result-badge">PROTECTED</div>
-    </div>
-    <div class="protection-layers" id="protectionLayers"></div>
-    <button class="btn-download" onclick="downloadResult()">
-      ⬇️ Download Laporan JSON
+  <!-- Waiting for Actions -->
+  <div class="card log-section" id="waitSection">
+    <div class="section-label">⏳ Menunggu GitHub Actions</div>
+    <div id="actionStatus" class="status-chip waiting">⏳ Menunggu job dimulai...</div>
+    <div class="log-box" id="waitLog"></div>
+    <button class="btn btn-outline" id="btnDownload" style="display:none" onclick="downloadArtifact()">
+      ⬇️ Download APK Terproteksi
     </button>
   </div>
 
-</div>
+  <!-- Result -->
+  <div class="card result-section" id="resultSection">
+    <div class="result-header">
+      <span style="font-size:24px;">✅</span>
+      <div><div style="font-size:16px;font-weight:700;">Semua Proses Selesai!</div><div style="font-size:12px;color:var(--muted);font-family:'Space Mono',monospace;" id="resultTime"></div></div>
+      <div class="result-badge">PROTECTED</div>
+    </div>
+    <div class="layers-grid" id="layersGrid"></div>
+    <button class="btn btn-outline" onclick="downloadReport()">⬇️ Download Laporan JSON</button>
+  </div>
 
+</div>
 <script>
   let selectedFile = null;
-  let protectionResult = null;
-  let startTime = null;
+  let reportData = null;
+  let runId = null;
+  let pollInterval = null;
+  let ghToken = '', ghRepo = '', groqKey = '';
 
-  // File upload handler
-  document.getElementById('apkFile').addEventListener('change', function(e) {
-    handleFile(e.target.files[0]);
-  });
-
+  document.getElementById('apkFile').addEventListener('change', e => handleFile(e.target.files[0]));
   const dropZone = document.getElementById('dropZone');
-  dropZone.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    dropZone.classList.add('drag-over');
-  });
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
   dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
-  dropZone.addEventListener('drop', (e) => {
-    e.preventDefault();
-    dropZone.classList.remove('drag-over');
-    const file = e.dataTransfer.files[0];
-    if (file && file.name.endsWith('.apk')) handleFile(file);
-  });
+  dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('drag-over'); const f = e.dataTransfer.files[0]; if (f?.name.endsWith('.apk')) handleFile(f); });
 
   function handleFile(file) {
     if (!file) return;
@@ -611,246 +220,265 @@
     document.getElementById('fileSelected').classList.add('show');
   }
 
-  function formatSize(bytes) {
-    if (bytes < 1024) return bytes + ' B';
-    if (bytes < 1024*1024) return (bytes/1024).toFixed(1) + ' KB';
-    return (bytes/(1024*1024)).toFixed(1) + ' MB';
+  function formatSize(b) {
+    if (b < 1024) return b + ' B';
+    if (b < 1048576) return (b/1024).toFixed(1) + ' KB';
+    return (b/1048576).toFixed(1) + ' MB';
   }
 
   function toggleFeature(label) {
     const cb = label.querySelector('input[type="checkbox"]');
     const box = label.querySelector('.check-box');
     setTimeout(() => {
-      if (cb.checked) {
-        label.classList.add('active');
-        box.textContent = '✓';
-      } else {
-        label.classList.remove('active');
-        box.textContent = '';
-      }
+      label.classList.toggle('active', cb.checked);
+      box.textContent = cb.checked ? '✓' : '';
     }, 10);
   }
 
-  function getSelectedFeatures() {
-    const checks = document.querySelectorAll('.feature-item input[type="checkbox"]:checked');
-    return Array.from(checks).map(c => c.value);
+  function getFeatures() {
+    return Array.from(document.querySelectorAll('.feature-item input:checked')).map(c => c.value);
   }
 
-  function addLog(msg, type = 'info') {
-    const box = document.getElementById('logBox');
-    const line = document.createElement('div');
-    line.className = `log-line ${type}`;
-    const time = new Date().toLocaleTimeString('id-ID');
-    line.textContent = `[${time}] ${msg}`;
-    box.appendChild(line);
+  function addLog(msg, type = 'info', boxId = 'logBox') {
+    const box = document.getElementById(boxId);
+    const div = document.createElement('div');
+    div.className = `log-line ${type}`;
+    div.textContent = `[${new Date().toLocaleTimeString('id-ID')}] ${msg}`;
+    box.appendChild(div);
     box.scrollTop = box.scrollHeight;
   }
 
-  function setProgress(pct) {
-    document.getElementById('progressBar').style.width = pct + '%';
-  }
+  function setProgress(p) { document.getElementById('progressBar').style.width = p + '%'; }
 
   async function startProtection() {
-    const apiKey = document.getElementById('apiKey').value.trim();
-    const features = getSelectedFeatures();
+    groqKey = document.getElementById('groqKey').value.trim();
+    ghToken = document.getElementById('ghToken').value.trim();
+    ghRepo = document.getElementById('ghRepo').value.trim();
+    const features = getFeatures();
 
-    if (!apiKey) return alert('⚠️ Masukkan Groq API Key dulu!');
+    if (!groqKey) return alert('⚠️ Masukkan Groq API Key!');
+    if (!ghToken) return alert('⚠️ Masukkan GitHub Token!');
+    if (!ghRepo) return alert('⚠️ Masukkan Username/Repo GitHub!');
     if (!selectedFile) return alert('⚠️ Upload file APK dulu!');
-    if (features.length === 0) return alert('⚠️ Pilih minimal 1 fitur proteksi!');
+    if (!features.length) return alert('⚠️ Pilih minimal 1 fitur!');
 
-    // Reset UI
     document.getElementById('btnProtect').disabled = true;
     document.getElementById('logSection').classList.add('show');
+    document.getElementById('waitSection').classList.remove('show');
     document.getElementById('resultSection').classList.remove('show');
     document.getElementById('logBox').innerHTML = '';
-    document.getElementById('aiResponse').classList.remove('show');
-    document.getElementById('logLabel').textContent = '⚡ Proses Berjalan...';
-    document.getElementById('logLabel').classList.add('blinking');
+    document.getElementById('waitLog').innerHTML = '';
+    document.getElementById('btnDownload').style.display = 'none';
     setProgress(0);
-    startTime = Date.now();
-    protectionResult = null;
+    reportData = null;
 
     try {
-      // Step 1: Baca file APK
-      addLog(`Membaca file: ${selectedFile.name} (${formatSize(selectedFile.size)})`, 'info');
+      // Step 1: Upload APK ke GitHub
+      addLog(`Membaca file: ${selectedFile.name}`, 'info');
       setProgress(10);
-      
-      const apkBase64 = await fileToBase64(selectedFile);
+      const base64 = await fileToBase64(selectedFile);
       addLog('File APK berhasil dibaca ✓', 'success');
+
+      addLog('Mengupload APK ke GitHub repo...', 'info');
       setProgress(20);
+      await uploadToGitHub(base64);
+      addLog('APK berhasil diupload ke repo ✓', 'success');
+      setProgress(35);
 
-      // Step 2: Analisis dengan Gemini
-      addLog('Menghubungi Groq AI Agent...', 'info');
-      setProgress(30);
-
-      const apkInfo = {
-        filename: selectedFile.name,
-        size: formatSize(selectedFile.size),
-        size_bytes: selectedFile.size,
-        features_requested: features
-      };
-
-      const prompt = buildAgentPrompt(apkInfo);
-      addLog('Groq AI sedang menganalisis APK...', 'agent');
+      // Step 2: Analisis dengan Groq
+      addLog('Menghubungi Groq AI Agent...', 'agent');
       setProgress(45);
-
-      const aiResult = await callGeminiAPI(apiKey, prompt);
+      const aiAnalysis = await callGroq(groqKey, buildPrompt(selectedFile.name, features));
       addLog('AI Agent selesai menganalisis ✓', 'success');
-      setProgress(60);
+      setProgress(55);
 
-      // Step 3: Simulasi eksekusi tools
-      for (let i = 0; i < features.length; i++) {
-        const feat = features[i];
-        addLog(`Menjalankan: ${getFeatureName(feat)}...`, 'agent');
-        await sleep(600);
-        addLog(`${getFeatureName(feat)} selesai ✓`, 'success');
-        setProgress(60 + ((i + 1) / features.length) * 30);
-      }
+      // Step 3: Trigger GitHub Actions
+      addLog('Mentrigger GitHub Actions workflow...', 'info');
+      setProgress(65);
+      const triggered = await triggerWorkflow(features);
+      addLog('GitHub Actions berhasil ditrigger ✓', 'success');
+      setProgress(75);
 
-      // Step 4: Generate report
-      addLog('Membuat laporan proteksi...', 'info');
-      await sleep(400);
-      setProgress(95);
-
-      protectionResult = {
+      reportData = {
         input_apk: selectedFile.name,
         timestamp: new Date().toISOString(),
-        duration_ms: Date.now() - startTime,
         features_applied: features,
-        file_size: formatSize(selectedFile.size),
-        ai_analysis: aiResult,
-        protection_layers: features.map(f => ({
-          name: getFeatureName(f),
-          status: 'success',
-          method: getFeatureMethod(f)
-        })),
-        summary: `APK berhasil diproteksi dengan ${features.length} lapisan keamanan`
+        ai_analysis: aiAnalysis,
+        protection_layers: features.map(f => ({ name: featureName(f), status: 'triggered', method: featureMethod(f) }))
       };
 
-      addLog('Semua proses selesai! ✓', 'success');
+      document.getElementById('logLabel').textContent = '✅ Upload & Trigger Selesai';
+      document.getElementById('logLabel').classList.remove('blinking');
       setProgress(100);
 
-      // Tampilkan AI response
-      const aiEl = document.getElementById('aiResponse');
-      aiEl.textContent = '🤖 AI Agent:\n\n' + aiResult;
-      aiEl.classList.add('show');
-
-      // Tampilkan result
-      showResult(protectionResult);
+      // Step 4: Polling GitHub Actions
+      document.getElementById('waitSection').classList.add('show');
+      addLog('Memulai polling status GitHub Actions...', 'info', 'waitLog');
+      startPolling();
 
     } catch (err) {
       addLog('Error: ' + err.message, 'error');
-      console.error(err);
-    } finally {
       document.getElementById('btnProtect').disabled = false;
-      document.getElementById('logLabel').textContent = '✅ Proses Selesai';
+      document.getElementById('logLabel').textContent = '❌ Gagal';
       document.getElementById('logLabel').classList.remove('blinking');
     }
   }
 
-  function buildAgentPrompt(apkInfo) {
-    return `Kamu adalah AI Agent spesialis keamanan Android APK bernama APK Shield.
+  async function uploadToGitHub(base64Content) {
+    const [owner, repo] = ghRepo.split('/');
+    const filename = selectedFile.name.replace(/\s+/g, '_');
+    const url = `https://api.github.com/repos/${owner}/${repo}/contents/${filename}`;
 
-Analisis APK berikut dan berikan strategi proteksi yang detail:
+    // Cek apakah file sudah ada (untuk update)
+    let sha = null;
+    try {
+      const check = await fetch(url, { headers: { 'Authorization': `token ${ghToken}`, 'Accept': 'application/vnd.github.v3+json' } });
+      if (check.ok) { const d = await check.json(); sha = d.sha; }
+    } catch(e) {}
 
-File: ${apkInfo.filename}
-Ukuran: ${apkInfo.size}
-Fitur yang diminta: ${apkInfo.features_requested.join(', ')}
+    const body = { message: `Upload APK: ${filename}`, content: base64Content };
+    if (sha) body.sha = sha;
 
-Berikan:
-1. Analisis risiko APK ini
-2. Strategi obfuscation yang direkomendasikan
-3. Teknik enkripsi DEX yang cocok
-4. Implementasi anti-debug yang disarankan
-5. Kesimpulan tingkat keamanan setelah proteksi
-
-Jawab dalam Bahasa Indonesia, singkat dan teknis.`;
-  }
-
-  async function callGeminiAPI(apiKey, prompt) {
-    const url = `https://api.groq.com/openai/v1/chat/completions`;
-
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`
-      },
-      body: JSON.stringify({
-        model: 'llama-3.3-70b-versatile',
-        messages: [{ role: 'user', content: prompt }],
-        temperature: 0.7,
-        max_tokens: 1024
-      })
+    const res = await fetch(url, {
+      method: 'PUT',
+      headers: { 'Authorization': `token ${ghToken}`, 'Content-Type': 'application/json', 'Accept': 'application/vnd.github.v3+json' },
+      body: JSON.stringify(body)
     });
 
-    if (!response.ok) {
-      const err = await response.json();
-      throw new Error(err.error?.message || 'Groq API error');
+    if (!res.ok) {
+      const e = await res.json();
+      throw new Error(e.message || 'Gagal upload ke GitHub');
     }
-
-    const data = await response.json();
-    return data.choices?.[0]?.message?.content || 'Tidak ada respons dari AI';
   }
 
-  function showResult(result) {
+  async function triggerWorkflow(features) {
+    const [owner, repo] = ghRepo.split('/');
+    const filename = selectedFile.name.replace(/\s+/g, '_');
+
+    const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/actions/workflows/protect.yml/dispatches`, {
+      method: 'POST',
+      headers: { 'Authorization': `token ${ghToken}`, 'Content-Type': 'application/json', 'Accept': 'application/vnd.github.v3+json' },
+      body: JSON.stringify({ ref: 'main', inputs: { apk_filename: filename } })
+    });
+
+    if (!res.ok) {
+      const e = await res.json();
+      throw new Error(e.message || 'Gagal trigger workflow');
+    }
+  }
+
+  function startPolling() {
+    let attempts = 0;
+    const maxAttempts = 40;
+    pollInterval = setInterval(async () => {
+      attempts++;
+      if (attempts > maxAttempts) {
+        clearInterval(pollInterval);
+        addLog('Timeout menunggu Actions. Cek manual di GitHub.', 'warn', 'waitLog');
+        return;
+      }
+
+      try {
+        const [owner, repo] = ghRepo.split('/');
+        const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/actions/runs?per_page=1`, {
+          headers: { 'Authorization': `token ${ghToken}`, 'Accept': 'application/vnd.github.v3+json' }
+        });
+        const data = await res.json();
+        const run = data.workflow_runs?.[0];
+        if (!run) return;
+
+        runId = run.id;
+        const status = run.status;
+        const conclusion = run.conclusion;
+        const chip = document.getElementById('actionStatus');
+
+        if (status === 'queued') {
+          chip.className = 'status-chip waiting';
+          chip.textContent = '⏳ Job antri...';
+          addLog(`Job #${run.run_number} antri...`, 'info', 'waitLog');
+        } else if (status === 'in_progress') {
+          chip.className = 'status-chip running';
+          chip.textContent = '🔄 Sedang berjalan...';
+          addLog(`Job #${run.run_number} sedang diproses...`, 'agent', 'waitLog');
+        } else if (status === 'completed') {
+          clearInterval(pollInterval);
+          if (conclusion === 'success') {
+            chip.className = 'status-chip done';
+            chip.textContent = '✅ Selesai!';
+            addLog('GitHub Actions berhasil! APK siap didownload ✓', 'success', 'waitLog');
+            document.getElementById('btnDownload').style.display = 'block';
+            showResult();
+          } else {
+            chip.className = 'status-chip failed';
+            chip.textContent = '❌ Gagal: ' + conclusion;
+            addLog('Actions gagal: ' + conclusion + '. Cek log di GitHub.', 'error', 'waitLog');
+            document.getElementById('btnProtect').disabled = false;
+          }
+        }
+      } catch(e) {
+        addLog('Polling error: ' + e.message, 'warn', 'waitLog');
+      }
+    }, 8000);
+  }
+
+  async function downloadArtifact() {
+    if (!runId) return alert('Run ID tidak ditemukan');
+    const [owner, repo] = ghRepo.split('/');
+    const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/actions/runs/${runId}/artifacts`, {
+      headers: { 'Authorization': `token ${ghToken}`, 'Accept': 'application/vnd.github.v3+json' }
+    });
+    const data = await res.json();
+    const artifact = data.artifacts?.[0];
+    if (!artifact) return alert('Artifact tidak ditemukan');
+    window.open(`https://github.com/${ghRepo}/actions/runs/${runId}`, '_blank');
+    addLog('Membuka halaman download artifact di GitHub...', 'success', 'waitLog');
+  }
+
+  function showResult() {
     const section = document.getElementById('resultSection');
-    const layers = document.getElementById('protectionLayers');
-    const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
-
-    document.getElementById('resultTime').textContent = `Selesai dalam ${elapsed} detik`;
-
-    layers.innerHTML = result.protection_layers.map(l => `
+    const grid = document.getElementById('layersGrid');
+    document.getElementById('resultTime').textContent = new Date().toLocaleString('id-ID');
+    const features = getFeatures();
+    grid.innerHTML = features.map(f => `
       <div class="layer-card">
         <div class="layer-status">✅ APPLIED</div>
-        <div class="layer-name">${l.name}</div>
-        <div style="font-size:11px;color:var(--muted);margin-top:4px;font-family:'Space Mono',monospace;">${l.method}</div>
-      </div>
-    `).join('');
-
+        <div class="layer-name">${featureName(f)}</div>
+        <div class="layer-method">${featureMethod(f)}</div>
+      </div>`).join('');
     section.classList.add('show');
-    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.getElementById('btnProtect').disabled = false;
   }
 
-  function downloadResult() {
-    if (!protectionResult) return;
-    const blob = new Blob([JSON.stringify(protectionResult, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
+  function downloadReport() {
+    if (!reportData) return;
+    const blob = new Blob([JSON.stringify(reportData, null, 2)], { type: 'application/json' });
     const a = document.createElement('a');
-    a.href = url;
+    a.href = URL.createObjectURL(blob);
     a.download = `protection_report_${Date.now()}.json`;
     a.click();
-    URL.revokeObjectURL(url);
+  }
+
+  async function callGroq(apiKey, prompt) {
+    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
+      body: JSON.stringify({ model: 'llama-3.3-70b-versatile', messages: [{ role: 'user', content: prompt }], temperature: 0.7, max_tokens: 1024 })
+    });
+    if (!res.ok) { const e = await res.json(); throw new Error(e.error?.message || 'Groq API error'); }
+    const d = await res.json();
+    return d.choices?.[0]?.message?.content || '';
+  }
+
+  function buildPrompt(filename, features) {
+    return `Kamu adalah AI Agent keamanan Android APK.\nAnalisis singkat untuk: ${filename}\nFitur: ${features.join(', ')}\nBerikan strategi proteksi dalam 3-4 kalimat singkat dalam Bahasa Indonesia.`;
   }
 
   function fileToBase64(file) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result.split(',')[1]);
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
-    });
+    return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result.split(',')[1]); r.onerror = rej; r.readAsDataURL(file); });
   }
 
-  function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
-
-  function getFeatureName(key) {
-    return {
-      obfuscation: 'Obfuscation',
-      dex_encrypt: 'DEX Encryption',
-      anti_debug: 'Anti-Debug',
-      strip_meta: 'Strip Metadata'
-    }[key] || key;
-  }
-
-  function getFeatureMethod(key) {
-    return {
-      obfuscation: 'ProGuard R8 + rename class/method/field',
-      dex_encrypt: 'XOR cipher + string constant encryption',
-      anti_debug: 'Debuggable flag + emulator + root detection',
-      strip_meta: 'Remove META-INF + ZIP comment strip'
-    }[key] || '';
-  }
+  function featureName(k) { return { obfuscation: 'Obfuscation', dex_encrypt: 'DEX Encryption', anti_debug: 'Anti-Debug', strip_meta: 'Strip Metadata' }[k] || k; }
+  function featureMethod(k) { return { obfuscation: 'ProGuard R8 + rename class/method', dex_encrypt: 'XOR cipher + string encryption', anti_debug: 'Debuggable + emulator + root detection', strip_meta: 'Remove META-INF + ZIP strip' }[k] || ''; }
 </script>
 </body>
-        </html>
+</html>
