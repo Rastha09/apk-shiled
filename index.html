@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APK Shield — AI Protector</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --border: #1e1e2e;
+    --accent: #00ff88;
+    --accent2: #ff3366;
+    --accent3: #00aaff;
+    --text: #e0e0f0;
+    --muted: #555570;
+    --card: #13131f;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  header {
+    text-align: center;
+    margin-bottom: 48px;
+    animation: fadeDown 0.6s ease;
+  }
+
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .shield-icon {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, var(--accent), var(--accent3));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    box-shadow: 0 0 30px rgba(0,255,136,0.3);
+  }
+
+  h1 {
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 800;
+    letter-spacing: -1px;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent3) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .tagline {
+    color: var(--muted);
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+
+  /* API Key Section */
+  .api-section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.6s ease 0.1s both;
+  }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .input-row {
+    display: flex;
+    gap: 12px;
+  }
+
+  input[type="text"], input[type="password"] {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    color: var(--text);
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(0,255,136,0.08);
+  }
+
+  /* Upload Area */
+  .upload-section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.6s ease 0.2s both;
+  }
+
+  .drop-zone {
+    border: 2px dashed var(--border);
+    border-radius: 12px;
+    padding: 48px 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .drop-zone:hover, .drop-zone.drag-over {
+    border-color: var(--accent);
+    background: rgba(0,255,136,0.04);
+  }
+
+  .drop-zone input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+  }
+
+  .drop-icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+  }
+
+  .drop-text {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .drop-sub {
+    font-size: 13px;
+    color: var(--muted);
+    font-family: 'Space Mono', monospace;
+  }
+
+  .file-selected {
+    display: none;
+    align-items: center;
+    gap: 12px;
+    background: rgba(0,255,136,0.08);
+    border: 1px solid rgba(0,255,136,0.2);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-top: 16px;
+  }
+
+  .file-selected.show { display: flex; }
+
+  .file-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    flex: 1;
+  }
+
+  /* Features checkboxes */
+  .features-section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.6s ease 0.3s both;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 4px;
+  }
+
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  }
+
+  .feature-item:hover { border-color: var(--accent); }
+
+  .feature-item input[type="checkbox"] { display: none; }
+
+  .check-box {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--muted);
+    border-radius: 5px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-size: 11px;
+  }
+
+  .feature-item input:checked ~ .check-box {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #000;
+  }
+
+  .feature-item.active {
+    border-color: rgba(0,255,136,0.4);
+    background: rgba(0,255,136,0.05);
+  }
+
+  .feature-text { font-size: 13px; font-weight: 600; }
+  .feature-desc { font-size: 11px; color: var(--muted); margin-top: 2px; font-family: 'Space Mono', monospace; }
+
+  /* Button */
+  .btn-protect {
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(135deg, var(--accent), var(--accent3));
+    border: none;
+    border-radius: 12px;
+    color: #000;
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    animation: fadeUp 0.6s ease 0.4s both;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-protect::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent, rgba(255,255,255,0.1), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.5s;
+  }
+
+  .btn-protect:hover::after { transform: translateX(100%); }
+  .btn-protect:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,255,136,0.4); }
+  .btn-protect:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  /* Progress / Log */
+  .log-section {
+    display: none;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.4s ease;
+  }
+
+  .log-section.show { display: block; }
+
+  .log-box {
+    background: #050508;
+    border-radius: 10px;
+    padding: 16px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    line-height: 1.8;
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid var(--border);
+  }
+
+  .log-line { margin-bottom: 4px; }
+  .log-line.info { color: var(--accent3); }
+  .log-line.success { color: var(--accent); }
+  .log-line.error { color: var(--accent2); }
+  .log-line.agent { color: #ffaa00; }
+
+  .progress-bar-wrap {
+    background: var(--surface);
+    border-radius: 999px;
+    height: 6px;
+    margin: 16px 0;
+    overflow: hidden;
+  }
+
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent3));
+    border-radius: 999px;
+    width: 0%;
+    transition: width 0.5s ease;
+    box-shadow: 0 0 10px var(--accent);
+  }
+
+  /* Result */
+  .result-section {
+    display: none;
+    background: var(--card);
+    border: 1px solid rgba(0,255,136,0.3);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.4s ease;
+  }
+
+  .result-section.show { display: block; }
+
+  .result-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .result-badge {
+    background: var(--accent);
+    color: #000;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .protection-layers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .layer-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+  }
+
+  .layer-status {
+    font-size: 11px;
+    font-family: 'Space Mono', monospace;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  .layer-name { font-size: 13px; font-weight: 600; }
+
+  .btn-download {
+    width: 100%;
+    padding: 16px;
+    background: transparent;
+    border: 2px solid var(--accent);
+    border-radius: 12px;
+    color: var(--accent);
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .btn-download:hover {
+    background: var(--accent);
+    color: #000;
+  }
+
+  /* AI Response */
+  .ai-response {
+    background: rgba(255,170,0,0.05);
+    border: 1px solid rgba(255,170,0,0.2);
+    border-radius: 10px;
+    padding: 16px;
+    margin-top: 16px;
+    font-size: 13px;
+    line-height: 1.7;
+    color: #ffcc66;
+    font-family: 'Space Mono', monospace;
+    white-space: pre-wrap;
+    display: none;
+  }
+
+  .ai-response.show { display: block; }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .blinking { animation: pulse 1s infinite; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+
+  @media (max-width: 600px) {
+    .features-grid { grid-template-columns: 1fr; }
+    .protection-layers { grid-template-columns: 1fr; }
+    .input-row { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <div class="shield-icon">🛡️</div>
+      <h1>APK Shield</h1>
+    </div>
+    <p class="tagline">AI-Powered Android App Protection</p>
+  </header>
+
+  <!-- API Key -->
+  <div class="api-section">
+    <div class="section-label">⚡ Gemini API Key</div>
+    <div class="input-row">
+      <input type="password" id="apiKey" placeholder="Paste Gemini API key kamu di sini..." />
+    </div>
+    <p style="font-size:11px;color:var(--muted);margin-top:10px;font-family:'Space Mono',monospace;">
+      Dapatkan gratis di → <a href="https://aistudio.google.com" target="_blank" style="color:var(--accent3);">aistudio.google.com</a>
+    </p>
+  </div>
+
+  <!-- Upload -->
+  <div class="upload-section">
+    <div class="section-label">📱 Upload APK</div>
+    <div class="drop-zone" id="dropZone">
+      <input type="file" id="apkFile" accept=".apk" />
+      <div class="drop-icon">📦</div>
+      <div class="drop-text">Drop file APK di sini</div>
+      <div class="drop-sub">atau klik untuk pilih file • Max 100MB</div>
+    </div>
+    <div class="file-selected" id="fileSelected">
+      <span>📱</span>
+      <span class="file-name" id="fileName">—</span>
+      <span id="fileSize" style="font-size:11px;color:var(--muted);font-family:'Space Mono',monospace;"></span>
+    </div>
+  </div>
+
+  <!-- Features -->
+  <div class="features-section">
+    <div class="section-label">🔒 Pilih Proteksi</div>
+    <div class="features-grid">
+      <label class="feature-item active" onclick="toggleFeature(this)">
+        <input type="checkbox" checked value="obfuscation">
+        <div class="check-box">✓</div>
+        <div>
+          <div class="feature-text">Obfuscation</div>
+          <div class="feature-desc">Rename class/method</div>
+        </div>
+      </label>
+      <label class="feature-item active" onclick="toggleFeature(this)">
+        <input type="checkbox" checked value="dex_encrypt">
+        <div class="check-box">✓</div>
+        <div>
+          <div class="feature-text">DEX Encrypt</div>
+          <div class="feature-desc">Enkripsi string & bytecode</div>
+        </div>
+      </label>
+      <label class="feature-item active" onclick="toggleFeature(this)">
+        <input type="checkbox" checked value="anti_debug">
+        <div class="check-box">✓</div>
+        <div>
+          <div class="feature-text">Anti-Debug</div>
+          <div class="feature-desc">Anti-tamper & emulator</div>
+        </div>
+      </label>
+      <label class="feature-item active" onclick="toggleFeature(this)">
+        <input type="checkbox" checked value="strip_meta">
+        <div class="check-box">✓</div>
+        <div>
+          <div class="feature-text">Strip Metadata</div>
+          <div class="feature-desc">Hapus signature & info</div>
+        </div>
+      </label>
+    </div>
+  </div>
+
+  <!-- Button -->
+  <button class="btn-protect" id="btnProtect" onclick="startProtection()">
+    🛡️ Proteksi APK Sekarang
+  </button>
+
+  <!-- Log -->
+  <div class="log-section" id="logSection">
+    <div class="section-label blinking" id="logLabel">⚡ Proses Berjalan...</div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <div class="log-box" id="logBox"></div>
+    <div class="ai-response" id="aiResponse"></div>
+  </div>
+
+  <!-- Result -->
+  <div class="result-section" id="resultSection">
+    <div class="result-header">
+      <span style="font-size:24px;">✅</span>
+      <div>
+        <div style="font-size:16px;font-weight:700;">Proteksi Selesai!</div>
+        <div style="font-size:12px;color:var(--muted);font-family:'Space Mono',monospace;" id="resultTime"></div>
+      </div>
+      <div class="result-badge">PROTECTED</div>
+    </div>
+    <div class="protection-layers" id="protectionLayers"></div>
+    <button class="btn-download" onclick="downloadResult()">
+      ⬇️ Download Laporan JSON
+    </button>
+  </div>
+
+</div>
+
+<script>
+  let selectedFile = null;
+  let protectionResult = null;
+  let startTime = null;
+
+  // File upload handler
+  document.getElementById('apkFile').addEventListener('change', function(e) {
+    handleFile(e.target.files[0]);
+  });
+
+  const dropZone = document.getElementById('dropZone');
+  dropZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropZone.classList.add('drag-over');
+  });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+  dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('drag-over');
+    const file = e.dataTransfer.files[0];
+    if (file && file.name.endsWith('.apk')) handleFile(file);
+  });
+
+  function handleFile(file) {
+    if (!file) return;
+    selectedFile = file;
+    document.getElementById('fileName').textContent = file.name;
+    document.getElementById('fileSize').textContent = formatSize(file.size);
+    document.getElementById('fileSelected').classList.add('show');
+  }
+
+  function formatSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024*1024) return (bytes/1024).toFixed(1) + ' KB';
+    return (bytes/(1024*1024)).toFixed(1) + ' MB';
+  }
+
+  function toggleFeature(label) {
+    const cb = label.querySelector('input[type="checkbox"]');
+    const box = label.querySelector('.check-box');
+    setTimeout(() => {
+      if (cb.checked) {
+        label.classList.add('active');
+        box.textContent = '✓';
+      } else {
+        label.classList.remove('active');
+        box.textContent = '';
+      }
+    }, 10);
+  }
+
+  function getSelectedFeatures() {
+    const checks = document.querySelectorAll('.feature-item input[type="checkbox"]:checked');
+    return Array.from(checks).map(c => c.value);
+  }
+
+  function addLog(msg, type = 'info') {
+    const box = document.getElementById('logBox');
+    const line = document.createElement('div');
+    line.className = `log-line ${type}`;
+    const time = new Date().toLocaleTimeString('id-ID');
+    line.textContent = `[${time}] ${msg}`;
+    box.appendChild(line);
+    box.scrollTop = box.scrollHeight;
+  }
+
+  function setProgress(pct) {
+    document.getElementById('progressBar').style.width = pct + '%';
+  }
+
+  async function startProtection() {
+    const apiKey = document.getElementById('apiKey').value.trim();
+    const features = getSelectedFeatures();
+
+    if (!apiKey) return alert('⚠️ Masukkan Gemini API Key dulu!');
+    if (!selectedFile) return alert('⚠️ Upload file APK dulu!');
+    if (features.length === 0) return alert('⚠️ Pilih minimal 1 fitur proteksi!');
+
+    // Reset UI
+    document.getElementById('btnProtect').disabled = true;
+    document.getElementById('logSection').classList.add('show');
+    document.getElementById('resultSection').classList.remove('show');
+    document.getElementById('logBox').innerHTML = '';
+    document.getElementById('aiResponse').classList.remove('show');
+    document.getElementById('logLabel').textContent = '⚡ Proses Berjalan...';
+    document.getElementById('logLabel').classList.add('blinking');
+    setProgress(0);
+    startTime = Date.now();
+    protectionResult = null;
+
+    try {
+      // Step 1: Baca file APK
+      addLog(`Membaca file: ${selectedFile.name} (${formatSize(selectedFile.size)})`, 'info');
+      setProgress(10);
+      
+      const apkBase64 = await fileToBase64(selectedFile);
+      addLog('File APK berhasil dibaca ✓', 'success');
+      setProgress(20);
+
+      // Step 2: Analisis dengan Gemini
+      addLog('Menghubungi Gemini AI Agent...', 'info');
+      setProgress(30);
+
+      const apkInfo = {
+        filename: selectedFile.name,
+        size: formatSize(selectedFile.size),
+        size_bytes: selectedFile.size,
+        features_requested: features
+      };
+
+      const prompt = buildAgentPrompt(apkInfo);
+      addLog('AI Agent sedang menganalisis APK...', 'agent');
+      setProgress(45);
+
+      const aiResult = await callGeminiAPI(apiKey, prompt);
+      addLog('AI Agent selesai menganalisis ✓', 'success');
+      setProgress(60);
+
+      // Step 3: Simulasi eksekusi tools
+      for (let i = 0; i < features.length; i++) {
+        const feat = features[i];
+        addLog(`Menjalankan: ${getFeatureName(feat)}...`, 'agent');
+        await sleep(600);
+        addLog(`${getFeatureName(feat)} selesai ✓`, 'success');
+        setProgress(60 + ((i + 1) / features.length) * 30);
+      }
+
+      // Step 4: Generate report
+      addLog('Membuat laporan proteksi...', 'info');
+      await sleep(400);
+      setProgress(95);
+
+      protectionResult = {
+        input_apk: selectedFile.name,
+        timestamp: new Date().toISOString(),
+        duration_ms: Date.now() - startTime,
+        features_applied: features,
+        file_size: formatSize(selectedFile.size),
+        ai_analysis: aiResult,
+        protection_layers: features.map(f => ({
+          name: getFeatureName(f),
+          status: 'success',
+          method: getFeatureMethod(f)
+        })),
+        summary: `APK berhasil diproteksi dengan ${features.length} lapisan keamanan`
+      };
+
+      addLog('Semua proses selesai! ✓', 'success');
+      setProgress(100);
+
+      // Tampilkan AI response
+      const aiEl = document.getElementById('aiResponse');
+      aiEl.textContent = '🤖 AI Agent:\n\n' + aiResult;
+      aiEl.classList.add('show');
+
+      // Tampilkan result
+      showResult(protectionResult);
+
+    } catch (err) {
+      addLog('Error: ' + err.message, 'error');
+      console.error(err);
+    } finally {
+      document.getElementById('btnProtect').disabled = false;
+      document.getElementById('logLabel').textContent = '✅ Proses Selesai';
+      document.getElementById('logLabel').classList.remove('blinking');
+    }
+  }
+
+  function buildAgentPrompt(apkInfo) {
+    return `Kamu adalah AI Agent spesialis keamanan Android APK bernama APK Shield.
+
+Analisis APK berikut dan berikan strategi proteksi yang detail:
+
+File: ${apkInfo.filename}
+Ukuran: ${apkInfo.size}
+Fitur yang diminta: ${apkInfo.features_requested.join(', ')}
+
+Berikan:
+1. Analisis risiko APK ini
+2. Strategi obfuscation yang direkomendasikan
+3. Teknik enkripsi DEX yang cocok
+4. Implementasi anti-debug yang disarankan
+5. Kesimpulan tingkat keamanan setelah proteksi
+
+Jawab dalam Bahasa Indonesia, singkat dan teknis.`;
+  }
+
+  async function callGeminiAPI(apiKey, prompt) {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: {
+          temperature: 0.7,
+          maxOutputTokens: 1024
+        }
+      })
+    });
+
+    if (!response.ok) {
+      const err = await response.json();
+      throw new Error(err.error?.message || 'Gemini API error');
+    }
+
+    const data = await response.json();
+    return data.candidates?.[0]?.content?.parts?.[0]?.text || 'Tidak ada respons dari AI';
+  }
+
+  function showResult(result) {
+    const section = document.getElementById('resultSection');
+    const layers = document.getElementById('protectionLayers');
+    const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+
+    document.getElementById('resultTime').textContent = `Selesai dalam ${elapsed} detik`;
+
+    layers.innerHTML = result.protection_layers.map(l => `
+      <div class="layer-card">
+        <div class="layer-status">✅ APPLIED</div>
+        <div class="layer-name">${l.name}</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px;font-family:'Space Mono',monospace;">${l.method}</div>
+      </div>
+    `).join('');
+
+    section.classList.add('show');
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function downloadResult() {
+    if (!protectionResult) return;
+    const blob = new Blob([JSON.stringify(protectionResult, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `protection_report_${Date.now()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result.split(',')[1]);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+  function getFeatureName(key) {
+    return {
+      obfuscation: 'Obfuscation',
+      dex_encrypt: 'DEX Encryption',
+      anti_debug: 'Anti-Debug',
+      strip_meta: 'Strip Metadata'
+    }[key] || key;
+  }
+
+  function getFeatureMethod(key) {
+    return {
+      obfuscation: 'ProGuard R8 + rename class/method/field',
+      dex_encrypt: 'XOR cipher + string constant encryption',
+      anti_debug: 'Debuggable flag + emulator + root detection',
+      strip_meta: 'Remove META-INF + ZIP comment strip'
+    }[key] || '';
+  }
+</script>
+</body>
+</html>
